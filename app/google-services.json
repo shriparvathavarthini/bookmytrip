@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "907998545671",
+    "project_id": "bookmytrip-6fc2f",
+    "storage_bucket": "bookmytrip-6fc2f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:907998545671:android:08562376faccfc321e67a2",
+        "android_client_info": {
+          "package_name": "com.example.bookmytrip"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUIXFtbyVf6g_2gFYrMlVyj88AezCs3V4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

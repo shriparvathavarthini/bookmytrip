@@ -1,0 +1,17 @@
+# Android Studio
+*.iml
+.gradle
+/local.properties
+/.idea/
+/build
+/captures
+output.json
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# APKs and signing
+*.apk
+*.jks
+*.keystore
