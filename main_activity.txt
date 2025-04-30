@@ -1,0 +1,1131 @@
+Linear Layout (Vertical/horizontal):
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp">
+
+    <TextView
+        android:text="Phone Number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:hint="Enter number"
+        android:inputType="phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:text="Next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"/>
+</LinearLayout>
+Relative Layout:
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/sample_image"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Title goes here"
+        android:layout_toRightOf="@id/image"
+        android:layout_marginStart="16dp"
+        android:layout_alignTop="@id/image"/>
+</RelativeLayout>
+Constraint Layout:
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="12dp">
+
+    <ImageView
+        android:id="@+id/restaurantImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/restaurant"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/restaurantName"
+        android:text="Biryani House"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/restaurantImage"
+        app:layout_constraintTop_toTopOf="@+id/restaurantImage"
+        android:layout_marginStart="16dp"/>
+
+    <TextView
+        android:id="@+id/restaurantRating"
+        android:text="⭐ 4.5"
+        app:layout_constraintStart_toStartOf="@+id/restaurantName"
+        app:layout_constraintTop_toBottomOf="@id/restaurantName"
+        android:layout_marginTop="8dp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
+Scrollview:
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <TextView android:text="Full Name"/>
+        <EditText android:hint="Enter name"/>
+
+        <TextView android:text="Email"/>
+        <EditText android:hint="Enter email"/>
+
+        <TextView android:text="Password"/>
+        <EditText android:hint="Enter password"/>
+
+        <Button android:text="Register"
+            android:layout_marginTop="24dp"/>
+
+    </LinearLayout>
+</ScrollView>
+Table layout:
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:stretchColumns="1"
+    android:padding="16dp">
+
+    <TableRow>
+        <TextView android:text="Item" />
+        <TextView android:text="Amount" />
+    </TableRow>
+
+    <TableRow>
+        <TextView android:text="Shoes" />
+        <TextView android:text="$50" />
+    </TableRow>
+
+    <TableRow>
+        <TextView android:text="Books" />
+        <TextView android:text="$30" />
+    </TableRow>
+</TableLayout>
+Frame layout:
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200dp">
+
+    <ImageView
+        android:src="@drawable/video_placeholder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:text="Loading..."
+        android:textColor="#FFF"
+        android:layout_gravity="center"
+        android:textSize="20sp"/>
+</FrameLayout>
+EXPLICIT INTENT (Move from one activity to another)
+MainActivity.kt:
+// File: MainActivity.kt
+package com.example.myapp
+
+import android.content.Intent
+import android.os.Bundle
+import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val btnNext = findViewById<Button>(R.id.btnNext)
+        btnNext.setOnClickListener {
+            val intent = Intent(this, SecondActivity::class.java)
+            startActivity(intent)
+        }
+    }
+}
+Code in activity_main.xml:
+<!-- File: res/layout/activity_main.xml -->
+<Button
+    android:id="@+id/btnNext"
+    android:text="Go to Next"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"/>
+EXPLICIT INTENT WITH DATA PASSING
+Code in MainActivity.kt
+val intent = Intent(this, SecondActivity::class.java)
+intent.putExtra("USERNAME", "JohnDoe")
+startActivity(intent)
+Code in SecondActivity.kt
+val name = intent.getStringExtra("USERNAME")
+textView.text = "Welcome, $name"
+
+IMPLICIT INTENT - Open Dialer
+Code in MainActivity.kt
+val dialIntent = Intent(Intent.ACTION_DIAL)
+dialIntent.data = Uri.parse("tel:1234567890")
+startActivity(dialIntent)
+
+IMPLICIT INTENT - Open Camera
+Permissions (add in AndroidManifest.xml)
+<uses-permission android:name="android.permission.CAMERA"/>
+Code in MainActivity.kt
+val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+startActivity(cameraIntent)
+IMPLICIT INTENT - Send SMS
+Code in MainActivity.kt
+val smsIntent = Intent(Intent.ACTION_SENDTO)
+smsIntent.data = Uri.parse("smsto:9876543210")
+smsIntent.putExtra("sms_body", "Hello, this is my message!")
+startActivity(smsIntent)
+IMPLICIT INTENT - Share Text
+Code in MainActivity.kt
+val shareIntent = Intent().apply {
+    action = Intent.ACTION_SEND
+    putExtra(Intent.EXTRA_TEXT, "This is shared from my app")
+    type = "text/plain"
+}
+startActivity(Intent.createChooser(shareIntent, "Share via"))
+OPTIONS MENU
+Create a Menu XML file
+📁 File path: res/menu/menu_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_settings"
+          android:title="Settings"/>
+    <item android:id="@+id/menu_logout"
+          android:title="Logout"/>
+</menu>
+
+Add code in MainActivity.kt
+// File: MainActivity.kt
+override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    menuInflater.inflate(R.menu.menu_main, menu)
+    return true
+}
+
+override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    when (item.itemId) {
+        R.id.menu_settings -> {
+            Toast.makeText(this, "Settings Clicked", Toast.LENGTH_SHORT).show()
+            return true
+        }
+        R.id.menu_logout -> {
+            Toast.makeText(this, "Logout Clicked", Toast.LENGTH_SHORT).show()
+            return true
+        }
+    }
+    return super.onOptionsItemSelected(item)
+}
+CONTEXT MENU
+Add a View (like a TextView) in your layout
+📁 res/layout/activity_main.xml
+<TextView
+    android:id="@+id/textView"
+    android:text="Long press me"
+    android:textSize="18sp"
+    android:padding="20dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" />
+
+Create Menu XML: res/menu/context_menu.xml
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/ctx_edit" android:title="Edit"/>
+    <item android:id="@+id/ctx_delete" android:title="Delete"/>
+</menu>
+Code in MainActivity.kt
+// In onCreate()
+val textView = findViewById<TextView>(R.id.textView)
+registerForContextMenu(textView)
+
+override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
+    super.onCreateContextMenu(menu, v, menuInfo)
+    menuInflater.inflate(R.menu.context_menu, menu)
+}
+
+override fun onContextItemSelected(item: MenuItem): Boolean {
+    return when (item.itemId) {
+        R.id.ctx_edit -> {
+            Toast.makeText(this, "Edit Selected", Toast.LENGTH_SHORT).show()
+            true
+        }
+        R.id.ctx_delete -> {
+            Toast.makeText(this, "Delete Selected", Toast.LENGTH_SHORT).show()
+            true
+        }
+        else -> super.onContextItemSelected(item)
+    }
+}
+
+
+POPUP MENU
+Add a Button to your layout
+<Button
+    android:id="@+id/btnShowPopup"
+    android:text="Show Popup"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"/>
+Create menu: res/menu/popup_menu.xml
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/pop_share" android:title="Share"/>
+    <item android:id="@+id/pop_delete" android:title="Delete"/>
+</menu>
+Code in MainActivity.kt
+val btnShowPopup = findViewById<Button>(R.id.btnShowPopup)
+btnShowPopup.setOnClickListener {
+    val popup = PopupMenu(this, it)
+    popup.menuInflater.inflate(R.menu.popup_menu, popup.menu)
+    popup.setOnMenuItemClickListener { item ->
+        when (item.itemId) {
+            R.id.pop_share -> {
+                Toast.makeText(this, "Share clicked", Toast.LENGTH_SHORT).show()
+                true
+            }
+            R.id.pop_delete -> {
+                Toast.makeText(this, "Delete clicked", Toast.LENGTH_SHORT).show()
+                true
+            }
+            else -> false
+        }
+    }
+    popup.show() }
+ALERT DIALOG
+Add a Button in activity_main.xml
+<Button
+    android:id="@+id/btnAlert"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Show Alert Dialog" />
+Kotlin: MainActivity.kt
+val btnAlert = findViewById<Button>(R.id.btnAlert)
+btnAlert.setOnClickListener {
+    val builder = AlertDialog.Builder(this)
+    builder.setTitle("Delete Confirmation")
+    builder.setMessage("Are you sure you want to delete this item?")
+    
+    builder.setPositiveButton("Yes") { dialog, which ->
+        Toast.makeText(this, "Item Deleted", Toast.LENGTH_SHORT).show()
+    }
+    
+    builder.setNegativeButton("No") { dialog, which ->
+        dialog.dismiss()
+    }
+
+    builder.setCancelable(false) // prevent closing by clicking outside
+    val dialog = builder.create()
+    dialog.show()
+}
+INPUT DIALOG (Alert Dialog with EditText Input)
+Add a Button in activity_main.xml
+<Button
+    android:id="@+id/btnInputDialog"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Input Dialog" />
+Kotlin: MainActivity.kt
+val btnInputDialog = findViewById<Button>(R.id.btnInputDialog)
+btnInputDialog.setOnClickListener {
+    val builder = AlertDialog.Builder(this)
+    builder.setTitle("Enter Your Name")
+
+    val input = EditText(this)
+    input.hint = "Your name"
+    builder.setView(input)
+
+    builder.setPositiveButton("OK") { dialog, which ->
+        val name = input.text.toString()
+        Toast.makeText(this, "Hello, $name!", Toast.LENGTH_SHORT).show()
+    }
+
+    builder.setNegativeButton("Cancel") { dialog, which -> dialog.cancel() }
+
+    builder.show()
+}
+CUSTOM DIALOG
+Create Custom Layout: res/layout/custom_dialog.xml
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="16dp"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <EditText
+        android:id="@+id/etFeedback"
+        android:hint="Enter your feedback"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:text="Submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
+UI: Add Button to activity_main.xml
+<Button
+    android:id="@+id/btnCustomDialog"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Custom Dialog"/>
+Kotlin: MainActivity.kt
+val btnCustomDialog = findViewById<Button>(R.id.btnCustomDialog)
+btnCustomDialog.setOnClickListener {
+    val dialogView = layoutInflater.inflate(R.layout.custom_dialog, null)
+    val builder = AlertDialog.Builder(this)
+    builder.setView(dialogView)
+
+    val dialog = builder.create()
+    dialog.show()
+
+    val etFeedback = dialogView.findViewById<EditText>(R.id.etFeedback)
+    val btnSubmit = dialogView.findViewById<Button>(R.id.btnSubmit)
+
+    btnSubmit.setOnClickListener {
+        val feedback = etFeedback.text.toString()
+        Toast.makeText(this, "Feedback: $feedback", Toast.LENGTH_SHORT).show()
+        dialog.dismiss()
+    }
+}
+NOTIFICATIONS
+Add a Button in activity_main.xml
+<Button
+    android:id="@+id/btnNotify"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Send Notification" />
+Add Notification Permissions (for Android 13+) in AndroidManifest.xml
+<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+Kotlin Code in MainActivity.kt
+val btnNotify = findViewById<Button>(R.id.btnNotify)
+
+// Create Notification Channel (required for Android 8+)
+if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+    val channel = NotificationChannel(
+        "myChannelId",
+        "My Notification Channel",
+        NotificationManager.IMPORTANCE_DEFAULT
+    )
+    val manager = getSystemService(NotificationManager::class.java)
+    manager.createNotificationChannel(channel)
+}
+
+btnNotify.setOnClickListener {
+    val builder = NotificationCompat.Builder(this, "myChannelId")
+        .setSmallIcon(android.R.drawable.ic_dialog_info)
+        .setContentTitle("Hello User!")
+        .setContentText("This is a sample notification.")
+        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+    val notificationManager = NotificationManagerCompat.from(this)
+
+    // For Android 13+ check permission
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS)
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(android.Manifest.permission.POST_NOTIFICATIONS),
+                1
+            )
+        } else {
+            notificationManager.notify(1001, builder.build())
+        }
+    } else {
+        notificationManager.notify(1001, builder.build())
+    }
+}
+SHARED PREFERENCES:
+Add UI to activity_main.xml
+<EditText
+    android:id="@+id/etName"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Enter your name" />
+
+<Button
+    android:id="@+id/btnSave"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Save Name" />
+
+<Button
+    android:id="@+id/btnShow"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Show Name" />
+
+<TextView
+    android:id="@+id/tvDisplayName"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textSize="18sp"
+    android:paddingTop="16dp"
+    android:text="Name will appear here" />
+Kotlin Code in MainActivity.kt
+val etName = findViewById<EditText>(R.id.etName)
+val btnSave = findViewById<Button>(R.id.btnSave)
+val btnShow = findViewById<Button>(R.id.btnShow)
+val tvDisplay = findViewById<TextView>(R.id.tvDisplayName)
+
+// Create SharedPreferences instance
+val sharedPref = getSharedPreferences("MyPrefs", MODE_PRIVATE)
+
+// Save data
+btnSave.setOnClickListener {
+    val name = etName.text.toString()
+    val editor = sharedPref.edit()
+    editor.putString("userName", name)
+    editor.apply()  // or editor.commit()
+    Toast.makeText(this, "Name Saved!", Toast.LENGTH_SHORT).show()
+}
+
+// Retrieve data
+btnShow.setOnClickListener {
+    val name = sharedPref.getString("userName", "No name saved")
+    tvDisplay.text = "Welcome, $name!"
+}
+Firebase Realtime Database:
+Prerequisites
+•	Connect Firebase to your Android project (Tools → Firebase → Realtime Database → Connect).
+•	Add dependencies via build.gradle (app):
+implementation 'com.google.firebase:firebase-database-ktx'
+Add Permissions to AndroidManifest.xml
+<uses-permission android:name="android.permission.INTERNET" />
+UI in activity_main.xml
+<EditText
+    android:id="@+id/etData"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Enter data" />
+
+<Button
+    android:id="@+id/btnSaveData"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Save to Firebase" />
+
+<TextView
+    android:id="@+id/tvFirebaseData"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Firebase Data will appear here" />
+Kotlin Code in MainActivity.kt
+import com.google.firebase.database.FirebaseDatabase
+
+val etData = findViewById<EditText>(R.id.etData)
+val btnSave = findViewById<Button>(R.id.btnSaveData)
+val tvData = findViewById<TextView>(R.id.tvFirebaseData)
+
+// Reference to Firebase DB
+val database = FirebaseDatabase.getInstance()
+val myRef = database.getReference("myData")
+
+// Save to Firebase
+btnSave.setOnClickListener {
+    val data = etData.text.toString()
+    myRef.setValue(data)
+    Toast.makeText(this, "Data Saved!", Toast.LENGTH_SHORT).show()
+}
+
+// Read from Firebase
+myRef.addValueEventListener(object : ValueEventListener {
+    override fun onDataChange(snapshot: DataSnapshot) {
+        val value = snapshot.getValue(String::class.java)
+        tvData.text = "Firebase Value: $value"
+    }
+
+    override fun onCancelled(error: DatabaseError) {
+        Toast.makeText(applicationContext, "Error!", Toast.LENGTH_SHORT).show()
+    }
+})
+SQLite Database in Android (Using SQLiteOpenHelper)
+Create a SQLite Helper Class
+Create a new Kotlin class MyDatabaseHelper.kt:
+class MyDatabaseHelper(context: Context) : SQLiteOpenHelper(context, "UserDB", null, 1) {
+    override fun onCreate(db: SQLiteDatabase) {
+        db.execSQL("CREATE TABLE users(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT)")
+    }
+
+    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+        db.execSQL("DROP TABLE IF EXISTS users")
+        onCreate(db)
+    }
+
+    fun insertUser(name: String): Boolean {
+        val db = this.writableDatabase
+        val values = ContentValues()
+        values.put("name", name)
+        val result = db.insert("users", null, values)
+        return result != -1L
+    }
+
+    fun getAllUsers(): String {
+        val db = this.readableDatabase
+        val cursor = db.rawQuery("SELECT * FROM users", null)
+        val result = StringBuilder()
+        while (cursor.moveToNext()) {
+            result.append("ID: ${cursor.getInt(0)}, Name: ${cursor.getString(1)}\n")
+        }
+        cursor.close()
+        return result.toString()
+    }
+}
+UI in activity_main.xml
+<EditText
+    android:id="@+id/etUserName"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Enter User Name" />
+
+<Button
+    android:id="@+id/btnAddUser"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Add User" />
+
+<Button
+    android:id="@+id/btnShowUsers"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Show Users" />
+
+<TextView
+    android:id="@+id/tvUsers"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+Kotlin Code in MainActivity.kt
+val db = MyDatabaseHelper(this)
+
+val etUser = findViewById<EditText>(R.id.etUserName)
+val btnAdd = findViewById<Button>(R.id.btnAddUser)
+val btnShow = findViewById<Button>(R.id.btnShowUsers)
+val tvUsers = findViewById<TextView>(R.id.tvUsers)
+
+btnAdd.setOnClickListener {
+    val name = etUser.text.toString()
+    val success = db.insertUser(name)
+    if (success) {
+        Toast.makeText(this, "User Added", Toast.LENGTH_SHORT).show()
+    } else {
+        Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show()
+    }
+}
+
+btnShow.setOnClickListener {
+    tvUsers.text = db.getAllUsers()
+}
+LOCATION SERVICES IN ANDROID (KOTLIN)
+Prerequisites
+Add this dependency in build.gradle (app):
+implementation 'com.google.android.gms:play-services-location:21.0.1'
+Add Permissions to AndroidManifest.xml:
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+Also, inside <application> tag, add:
+<meta-data
+    android:name="com.google.android.geo.API_KEY"
+    android:value="YOUR_GOOGLE_MAPS_API_KEY" />
+
+
+activity_main.xml
+<Button
+    android:id="@+id/btnGetLocation"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Get Current Location" />
+
+<TextView
+    android:id="@+id/tvLocation"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Location will be shown here" />
+Kotlin Code: MainActivity.kt
+import android.Manifest
+import android.content.pm.PackageManager
+import android.location.Location
+import android.os.Bundle
+import android.widget.Button
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+
+class MainActivity : AppCompatActivity() {
+
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var tvLocation: TextView
+    private val LOCATION_REQUEST_CODE = 101
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val btnGetLocation = findViewById<Button>(R.id.btnGetLocation)
+        tvLocation = findViewById(R.id.tvLocation)
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+        btnGetLocation.setOnClickListener {
+            getLocation()
+        }
+    }
+
+    private fun getLocation() {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                LOCATION_REQUEST_CODE
+            )
+            return
+        }
+
+        fusedLocationClient.lastLocation
+            .addOnSuccessListener { location: Location? ->
+                if (location != null) {
+                    val lat = location.latitude
+                    val lon = location.longitude
+                    tvLocation.text = "Latitude: $lat\nLongitude: $lon"
+                } else {
+                    Toast.makeText(this, "Location not found", Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int, permissions: Array<String>, grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == LOCATION_REQUEST_CODE && grantResults.isNotEmpty() &&
+            grantResults[0] == PackageManager.PERMISSION_GRANTED
+        ) {
+            getLocation()
+        } else {
+            Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
+        }
+    }
+}
+PROGRESS BAR
+activity_main.xml
+Indeterminate ProgressBar (spinning circle):
+<ProgressBar
+    android:id="@+id/progressBar"
+    style="?android:attr/progressBarStyleLarge"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:visibility="gone" />
+    
+<Button
+    android:id="@+id/btnStart"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Start Task" />
+Kotlin: MainActivity.kt
+val progressBar = findViewById<ProgressBar>(R.id.progressBar)
+val btnStart = findViewById<Button>(R.id.btnStart)
+
+btnStart.setOnClickListener {
+    progressBar.visibility = View.VISIBLE
+
+    Handler(Looper.getMainLooper()).postDelayed({
+        progressBar.visibility = View.GONE
+        Toast.makeText(this, "Task Completed", Toast.LENGTH_SHORT).show()
+    }, 3000) // simulate 3 seconds delay
+}
+DATE PICKER
+activity_main.xml
+<Button
+    android:id="@+id/btnDate"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Pick Date" />
+
+<TextView
+    android:id="@+id/tvDate"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Selected Date: " />
+
+Kotlin: MainActivity.kt
+val btnDate = findViewById<Button>(R.id.btnDate)
+val tvDate = findViewById<TextView>(R.id.tvDate)
+
+btnDate.setOnClickListener {
+    val calendar = Calendar.getInstance()
+    val year = calendar.get(Calendar.YEAR)
+    val month = calendar.get(Calendar.MONTH)
+    val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+    val datePicker = DatePickerDialog(this, { _, y, m, d ->
+        tvDate.text = "Selected Date: $d/${m + 1}/$y"
+    }, year, month, day)
+
+    datePicker.show()
+}
+TIME PICKER
+activity_main.xml
+<Button
+    android:id="@+id/btnTime"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Pick Time" />
+
+<TextView
+    android:id="@+id/tvTime"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Selected Time: " />
+
+
+Kotlin: MainActivity.kt
+val btnTime = findViewById<Button>(R.id.btnTime)
+val tvTime = findViewById<TextView>(R.id.tvTime)
+
+btnTime.setOnClickListener {
+    val calendar = Calendar.getInstance()
+    val hour = calendar.get(Calendar.HOUR_OF_DAY)
+    val minute = calendar.get(Calendar.MINUTE)
+
+    val timePicker = TimePickerDialog(this, { _, h, m ->
+        tvTime.text = "Selected Time: $h:$m"
+    }, hour, minute, true)
+
+    timePicker.show()
+}
+Sending SMS Programmatically
+Step 1: Add Permission in AndroidManifest.xml
+<uses-permission android:name="android.permission.SEND_SMS"/>
+activity_main.xml
+<EditText
+    android:id="@+id/etPhone"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Enter phone number"
+    android:inputType="phone"/>
+
+<EditText
+    android:id="@+id/etMessage"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Enter your message"/>
+
+<Button
+    android:id="@+id/btnSendSMS"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Send SMS"/>
+Kotlin: MainActivity.kt
+import android.telephony.SmsManager
+import android.Manifest
+import android.content.pm.PackageManager
+import androidx.core.app.ActivityCompat
+
+val etPhone = findViewById<EditText>(R.id.etPhone)
+val etMessage = findViewById<EditText>(R.id.etMessage)
+val btnSendSMS = findViewById<Button>(R.id.btnSendSMS)
+
+btnSendSMS.setOnClickListener {
+    val phone = etPhone.text.toString()
+    val message = etMessage.text.toString()
+
+    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.SEND_SMS), 101)
+    } else {
+        val smsManager = SmsManager.getDefault()
+        smsManager.sendTextMessage(phone, null, message, null, null)
+        Toast.makeText(this, "SMS Sent!", Toast.LENGTH_SHORT).show()
+    }
+}
+Send Message via WhatsApp
+activity_main.xml
+<EditText
+    android:id="@+id/etMessageWA"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Message to send on WhatsApp"/>
+
+<Button
+    android:id="@+id/btnWhatsApp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Send via WhatsApp"/>
+Kotlin: MainActivity.kt
+val etMessageWA = findViewById<EditText>(R.id.etMessageWA)
+val btnWhatsApp = findViewById<Button>(R.id.btnWhatsApp)
+
+btnWhatsApp.setOnClickListener {
+    val message = etMessageWA.text.toString()
+
+    val intent = Intent(Intent.ACTION_SEND)
+    intent.type = "text/plain"
+    intent.setPackage("com.whatsapp") // Make sure WhatsApp is installed
+    intent.putExtra(Intent.EXTRA_TEXT, message)
+
+    try {
+        startActivity(intent)
+    } catch (e: Exception) {
+        Toast.makeText(this, "WhatsApp not installed!", Toast.LENGTH_SHORT).show()
+    }
+}
+Airplane Mode ON/OFF Detection
+Step 1: Declare Receiver in AndroidManifest.xml
+<receiver android:name=".AirplaneModeReceiver">
+    <intent-filter>
+        <action android:name="android.intent.action.AIRPLANE_MODE"/>
+    </intent-filter>
+</receiver>
+Create a New Kotlin File: AirplaneModeReceiver.kt
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.widget.Toast
+
+class AirplaneModeReceiver : BroadcastReceiver() {
+    override fun onReceive(context: Context, intent: Intent) {
+        val isAirplaneModeOn = intent.getBooleanExtra("state", false)
+        if (isAirplaneModeOn) {
+            Toast.makeText(context, "Airplane Mode Enabled", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(context, "Airplane Mode Disabled", Toast.LENGTH_SHORT).show()
+        }
+    }
+}
+Battery Level Detection (Broadcast)
+Kotlin: Inside MainActivity.kt
+val batteryReceiver = object : BroadcastReceiver() {
+    override fun onReceive(context: Context, intent: Intent) {
+        val level = intent.getIntExtra("level", 0)
+        Toast.makeText(context, "Battery Level: $level%", Toast.LENGTH_SHORT).show()
+    }
+}
+
+override fun onResume() {
+    super.onResume()
+    val filter = IntentFilter(Intent.ACTION_BATTERY_CHANGED)
+    registerReceiver(batteryReceiver, filter)
+}
+
+override fun onPause() {
+    super.onPause()
+    unregisterReceiver(batteryReceiver)
+}
+Animations in Android (View Animations)
+activity_main.xml
+<Button
+    android:id="@+id/btnAnimate"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Animate Me"
+    android:layout_centerHorizontal="true"/>
+Kotlin: MainActivity.kt
+import android.view.animation.AnimationUtils
+import android.view.animation.Animation
+
+val btnAnimate = findViewById<Button>(R.id.btnAnimate)
+val anim = AnimationUtils.loadAnimation(this, R.anim.bounce)
+
+btnAnimate.setOnClickListener {
+    btnAnimate.startAnimation(anim)
+}
+Bounce Animation (res/anim/bounce.xml)
+<scale xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fromXScale="1.0"
+    android:toXScale="1.2"
+    android:fromYScale="1.0"
+    android:toYScale="1.2"
+    android:duration="500"
+    android:repeatCount="infinite"
+    android:repeatMode="reverse"/>
+Bluetooth in Android (Send and Receive Data)
+Step 1: Add Bluetooth Permissions in AndroidManifest.xml
+<uses-permission android:name="android.permission.BLUETOOTH"/>
+<uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+<uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+<uses-feature android:name="android.hardware.bluetooth" android:required="true"/>
+Kotlin: MainActivity.kt (Turn Bluetooth On)
+val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+
+if (bluetoothAdapter == null) {
+    Toast.makeText(this, "Bluetooth not supported", Toast.LENGTH_SHORT).show()
+} else {
+    if (!bluetoothAdapter.isEnabled) {
+        val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+        startActivityForResult(enableBtIntent, 1)
+    }
+}
+AdMob Integration in Android
+Step 1: Add AdMob Dependencies in build.gradle (App)
+implementation 'com.google.android.gms:play-services-ads:20.4.0'
+Step 2: Add AdMob Ad Unit ID in AndroidManifest.xml
+<meta-data
+    android:name="com.google.android.gms.ads.APPLICATION_ID"
+    android:value="ca-app-pub-3940256099942544~3347511713"/>
+Kotlin: MainActivity.kt (Load Banner Ad)
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+
+val adView = findViewById<AdView>(R.id.adView)
+
+val adRequest = AdRequest.Builder().build()
+adView.loadAd(adRequest)
+Add AdView in activity_main.xml
+<com.google.android.gms.ads.AdView
+    android:id="@+id/adView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:adSize="BANNER"
+    app:adUnitId="ca-app-pub-3940256099942544/6300978111"/>
+Linkify in Android
+Kotlin: MainActivity.kt
+import android.text.util.Linkify
+import android.widget.TextView
+
+val tvContent = findViewById<TextView>(R.id.tvContent)
+
+tvContent.text = "For more details, visit https://www.example.com"
+Linkify.addLinks(tvContent, Linkify.WEB_URLS)
+UI: activity_main.xml
+<TextView
+    android:id="@+id/tvContent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="For more details, visit www.example.com" />
+Integrating Social Media (Facebook, Twitter, etc.)
+Step 1: Add Dependencies for Facebook/Twitter SDK in build.gradle
+// For Facebook Login
+implementation 'com.facebook.android:facebook-login:11.1.0'
+
+// For Twitter Login
+implementation 'com.twitter.sdk.android:twitter-core:3.3.0'
+implementation 'com.twitter.sdk.android:twitter:3.3.0'
+Kotlin: Facebook Login Example
+import com.facebook.FacebookCallback
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
+
+LoginManager.getInstance().logInWithReadPermissions(this, listOf("email"))
+
+LoginManager.getInstance().registerCallback(callbackManager,
+    object : FacebookCallback<LoginResult> {
+        override fun onSuccess(result: LoginResult?) {
+            Toast.makeText(this@MainActivity, "Login Success!", Toast.LENGTH_SHORT).show()
+        }
+        
+        override fun onCancel() {
+            Toast.makeText(this@MainActivity, "Login Canceled", Toast.LENGTH_SHORT).show()
+        }
+
+        override fun onError(error: FacebookException?) {
+            Toast.makeText(this@MainActivity, "Login Error", Toast.LENGTH_SHORT).show()
+        }
+    })
+UI: Add Login Button for Facebook in activity_main.xml
+<com.facebook.login.widget.LoginButton
+    android:id="@+id/login_button"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"/>
+Audio in Android (Play Audio Files)
+Step 1: Add Audio Permissions in AndroidManifest.xml
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+Kotlin: MainActivity.kt (Play Audio)
+import android.media.MediaPlayer
+import android.widget.Button
+
+val btnPlayAudio = findViewById<Button>(R.id.btnPlayAudio)
+
+btnPlayAudio.setOnClickListener {
+    val mediaPlayer = MediaPlayer.create(this, R.raw.audio_file)  // Put audio file in res/raw/
+    mediaPlayer.start()
+}
+Video in Android (Play Video Files)
+Step 1: Add Permissions for Video (if accessing storage)
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+Kotlin: MainActivity.kt (Play Video)
+import android.widget.Button
+import android.widget.VideoView
+import android.net.Uri
+
+val videoView = findViewById<VideoView>(R.id.videoView)
+val btnPlayVideo = findViewById<Button>(R.id.btnPlayVideo)
+
+btnPlayVideo.setOnClickListener {
+    val videoUri = Uri.parse("android.resource://" + packageName + "/" + R.raw.video_file)  // Put video in res/raw/
+    videoView.setVideoURI(videoUri)
+    videoView.start()
+}
+UI: activity_main.xml (VideoView)
+<VideoView
+    android:id="@+id/videoView"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"/>
+<Button
+    android:id="@+id/btnPlayVideo"
+    android:text="Play Video"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"/>
+Camera in Android (Capture Photo)
+Step 1: Add Camera Permissions in AndroidManifest.xml
+<uses-permission android:name="android.permission.CAMERA"/>
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+Step 2: Open Camera Intent
+val btnCapturePhoto = findViewById<Button>(R.id.btnCapturePhoto)
+val imgView = findViewById<ImageView>(R.id.imgView)
+
+btnCapturePhoto.setOnClickListener {
+    val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+    startActivityForResult(intent, 1)
+}
+Step 3: Handle the Result in onActivityResult()
+override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    if (requestCode == 1 && resultCode == RESULT_OK) {
+        val imageBitmap = data?.extras?.get("data") as Bitmap
+        imgView.setImageBitmap(imageBitmap)
+    }
+}
+UI: activity_main.xml (Capture Photo Button and ImageView)
+<Button
+    android:id="@+id/btnCapturePhoto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Capture Photo"/>
+<ImageView
+    android:id="@+id/imgView"
+    android:layout_width="200dp"
+    android:layout_height="200dp"/>
+
+
+
+
+
+
+
+
+
+
